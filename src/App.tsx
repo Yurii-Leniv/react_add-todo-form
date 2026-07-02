@@ -8,9 +8,9 @@ import { TodoList } from './components/TodoList';
 export const App = () => {
   // Готуємо початковий список завдань, одразу додаючи до кожного об'єкт користувача
   const initialTodos = todosFromServer.map(todo => {
-    const user = usersFromServer.find(user => user.id === todo.userId);
+    const foundUser = usersFromServer.find(user => user.id === todo.userId);
 
-    return { ...todo, user };
+    return { ...todo, user: foundUser };
   });
 
   // Створюємо стани для полів форми, списку завдань та помилок
@@ -49,8 +49,8 @@ export const App = () => {
     }
 
     // Знаходимо користувача та максимальний ID для нового завдання
-    const user = usersFromServer.find(u => u.id === userId);
-    const maxId = Math.max(...todos.map(todo => todo.id));
+    const foundUser = usersFromServer.find(user => user.id === userId);
+    const maxId = Math.max(...todos.map(currentTodo => currentTodo.id));
 
     // Додаємо нове завдання в список
     setTodos(prevTodos => [
@@ -60,7 +60,7 @@ export const App = () => {
         id: maxId + 1,
         title,
         completed: false,
-        user, // Додаємо повний об'єкт користувача
+        user: foundUser, // Додаємо повний об'єкт користувача
       },
     ]);
 
@@ -94,9 +94,9 @@ export const App = () => {
             <option value={0} disabled>
               Choose a user
             </option>
-            {usersFromServer.map(user => (
-              <option key={user.id} value={user.id}>
-                {user.name}
+            {usersFromServer.map(currentUser => (
+              <option key={currentUser.id} value={currentUser.id}>
+                {currentUser.name}
               </option>
             ))}
           </select>

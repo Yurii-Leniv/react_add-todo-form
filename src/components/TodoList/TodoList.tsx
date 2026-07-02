@@ -1,9 +1,6 @@
 import React from 'react';
-import { Todo } from '../../types/todo';
-import { User } from '../../types/user';
 import { TodoInfo } from '../TodoInfo/TodoInfo';
-
-type TodoWithUser = Todo & { user?: User };
+import { TodoWithUser } from '../../types';
 
 type TodoListProps = {
   todos: TodoWithUser[];
@@ -12,8 +9,8 @@ type TodoListProps = {
 export const TodoList = ({ todos }: TodoListProps) => {
   return (
     <section className="TodoList">
-      {todos.map(todo => (
-        <TodoInfo key={todo.id} todo={todo} />
+      {todos.map(currentTodo => (
+        <TodoInfo key={currentTodo.id} todo={currentTodo} />
       ))}
     </section>
   );
